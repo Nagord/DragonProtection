@@ -8,11 +8,11 @@ namespace HostOnlyCaptain
 
         public override string Author => "Dragon";
 
-        public override string Name => "HostOnlyCaptain";
+        public override string Name => "DragonProtection";
 
         public override string HarmonyIdentifier()
         {
-            return "Dragon.HostOnlyCaptain";
+            return "Dragon.DragonProtection";
         }
     }
 }

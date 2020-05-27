@@ -8,6 +8,10 @@ namespace HostOnlyCaptain
     {
         static bool Prefix(ref int classID, ref int playerID)
         {
+            if (!PhotonNetwork.isMasterClient)
+            {
+                return true;
+            }
             if (classID == 0 && playerID != 0)
             {
                 Debug.Log("[DragonWarning] Someone is trying to Become Captain without your permission. This could be okay.");
@@ -34,7 +38,8 @@ namespace HostOnlyCaptain
     {
         static bool Prefix(ref int classID)
         {
-            if (!PLServer.Instance.GetCachedFriendlyPlayerOfClass(classID).IsBot)
+            PLPlayer player = PLServer.Instance.GetCachedFriendlyPlayerOfClass(classID);
+            if (player != null && !player.IsBot)
             {
                 Debug.Log("[DragonWarning] Someone is trying to remove remove Player of class " + classID);
                 PLServer.Instance.AddNotification("[DragonWarning] Someone is trying to remove Player of class " + classID, PLNetworkManager.Instance.LocalPlayerID, PLServer.Instance.GetEstimatedServerMs() + 6000, true);
@@ -48,7 +53,8 @@ namespace HostOnlyCaptain
     {
         static bool Prefix(ref int inPlayerID)
         {
-            if (!PLServer.Instance.GetPlayerFromPlayerID(inPlayerID).IsBot)
+            PLPlayer player = PLServer.Instance.GetPlayerFromPlayerID(inPlayerID);
+            if (player != null && !player.IsBot)
             {
                 Debug.Log("[DragonWarning] Someone is trying to delete PlayerID " + inPlayerID);
                 PLServer.Instance.AddNotification("[DragonWarning] Someone is trying to delete PlayerID " + inPlayerID, PLNetworkManager.Instance.LocalPlayerID, PLServer.Instance.GetEstimatedServerMs() + 6000, true);
