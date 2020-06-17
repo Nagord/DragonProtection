@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30021.99
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HostOnlyCaptain", "HostOnlyCaptain\HostOnlyCaptain.csproj", "{B8EFD231-25BB-4D55-955A-7E820C602011}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonProtection", "HostOnlyCaptain\DragonProtection.csproj", "{B8EFD231-25BB-4D55-955A-7E820C602011}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

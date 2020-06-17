@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using UnityEngine;
 
-namespace HostOnlyCaptain
+namespace DragonProtection
 {
     [HarmonyPatch(typeof(PLServer), "SetPlayerAsClassID")]
     class Patch
