@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using PulsarPluginLoader.Utilities;
 using UnityEngine;
 
 namespace DragonProtection
@@ -8,7 +9,7 @@ namespace DragonProtection
     {
         static bool Prefix(ref int classID, ref int playerID)
         {
-            if (!PhotonNetwork.isMasterClient)
+            if (!PhotonNetwork.isMasterClient || !Global.ProtectionEnabled)
             {
                 return true;
             }
@@ -39,7 +40,7 @@ namespace DragonProtection
         static bool Prefix(ref int classID)
         {
             PLPlayer player = PLServer.Instance.GetCachedFriendlyPlayerOfClass(classID);
-            if (player != null && !player.IsBot)
+            if (Global.ProtectionEnabled && player != null && !player.IsBot)
             {
                 Debug.Log("[DragonWarning] Someone is trying to remove remove Player of class " + classID);
                 PLServer.Instance.AddNotification("[DragonWarning] Someone is trying to remove Player of class " + classID, PLNetworkManager.Instance.LocalPlayerID, PLServer.Instance.GetEstimatedServerMs() + 6000, true);
@@ -54,13 +55,30 @@ namespace DragonProtection
         static bool Prefix(ref int inPlayerID)
         {
             PLPlayer player = PLServer.Instance.GetPlayerFromPlayerID(inPlayerID);
-            if (player != null && !player.IsBot)
+            if (Global.ProtectionEnabled && player != null && !player.IsBot)
             {
                 Debug.Log("[DragonWarning] Someone is trying to delete PlayerID " + inPlayerID);
                 PLServer.Instance.AddNotification("[DragonWarning] Someone is trying to delete PlayerID " + inPlayerID, PLNetworkManager.Instance.LocalPlayerID, PLServer.Instance.GetEstimatedServerMs() + 6000, true);
                 return false;
             }
             return true;
+        }
+    }
+    [HarmonyPatch(typeof(PLServer), "CaptainFlushAirlockComponent")]
+    class FlushAirlockComponentPatch
+    {
+        static bool Prefix()
+        {
+            if (Global.ProtectionEnabled)
+            {
+                Debug.Log("[DragonWarning] Someone is trying to delete a component");
+                Messaging.Notification("[DragonWarning] Someone is trying to delete a component! (this could be you)");
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }
