@@ -4,7 +4,7 @@ namespace DragonProtection
 {
     public class Plugin : PulsarPlugin
     {
-        public override string Version => "1.3.0";
+        public override string Version => "1.3.1";
 
         public override string Author => "Dragon";
 

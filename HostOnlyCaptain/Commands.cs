@@ -19,11 +19,16 @@ namespace DragonProtection
             return "enables and disables protection";
         }
 
-        public bool Execute(string arguments)
+        public bool Execute(string arguments, int SenderID)
         {
             Global.ProtectionEnabled = !Global.ProtectionEnabled;
             string message = Global.ProtectionEnabled ? "Enabled" : "Disabled, you should turn it back on ASAP. This will be reset to Enabled when the game is restarted";
             Messaging.Notification($"DragonProtection is now {message}");
+            return false;
+        }
+
+        public bool PublicCommand()
+        {
             return false;
         }
 
